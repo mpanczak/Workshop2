@@ -4,6 +4,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import pl.coderslab.DbUtil;
 
 import java.sql.*;
+import java.util.Arrays;
 
 public class UserDAO {
     private static final String CREATE_USER_QUERY =
@@ -14,6 +15,8 @@ public class UserDAO {
             "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
     private static final String DELETE_USER_QUERY =
             "DELETE FROM users WHERE id = ?";
+    private static final String READ_ALL_USERS_QUERY =
+            "SELECT * FROM users";
 
     public User create(User user) {
         try (Connection conn = DbUtil.getConnection()) {
@@ -76,7 +79,30 @@ public class UserDAO {
 
         }
     }
+    public User[] findAll() {
+        User[] allUsers = new User[0];
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(READ_ALL_USERS_QUERY);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                User tmpUser = new User();
+                 tmpUser.setId(rs.getInt("id"));
+                 tmpUser.setUserName(rs.getString("username"));
+                 tmpUser.setEmail(rs.getString("email"));
+                 tmpUser.setPassword(rs.getString("password"));
+                 allUsers = addToArray(tmpUser, allUsers);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allUsers;
+    }
     public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+    private User[] addToArray (User u, User[] users) {
+        User[] tmpUsers = Arrays.copyOf(users, users.length + 1);
+        tmpUsers[users.length] = u;
+        return tmpUsers;
     }
 }

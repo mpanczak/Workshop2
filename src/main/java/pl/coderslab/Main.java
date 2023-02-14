@@ -23,7 +23,7 @@ public class Main {
 
         // read
         UserDAO userDAO1 = new UserDAO();
-        System.out.println(userDAO1.read(3).toString());
+        System.out.println(userDAO1.read(5).toString());
 
         //update
         UserDAO userDAO2 = new UserDAO();
@@ -32,6 +32,12 @@ public class Main {
 
         //delete
         userDAO2.delete(3);
-        System.out.println(userDAO1.read(3).toString());
+        System.out.println(userDAO1.read(4).toString());
+
+        //findAll
+        UserDAO userDAO3 = new UserDAO();
+        for (User someUser : userDAO3.findAll()) {
+            System.out.println(someUser.toString());
+        }
     }
 }
