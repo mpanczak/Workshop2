@@ -17,16 +17,21 @@ public class Main {
         user2.setPassword("coffe1&");
 
 
-//create
+        //create
 //        UserDAO userDAO = new UserDAO();
 //        System.out.println(userDAO.create(user).toString());
-//read
+
+        // read
         UserDAO userDAO1 = new UserDAO();
         System.out.println(userDAO1.read(3).toString());
-//update
 
+        //update
         UserDAO userDAO2 = new UserDAO();
-        userDAO2.update(user2);
+//        userDAO2.update(user2);
+//        System.out.println(userDAO1.read(3).toString());
+
+        //delete
+        userDAO2.delete(3);
         System.out.println(userDAO1.read(3).toString());
     }
 }
