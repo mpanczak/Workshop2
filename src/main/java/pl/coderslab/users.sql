@@ -16,3 +16,4 @@ CREATE TABLE users (
 );
 SELECT * FROM users;
 DESCRIBE users;
+EXPLAIN SELECT * FROM users;

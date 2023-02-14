@@ -34,6 +34,26 @@ public class UserDAO {
             return null;
         }
     }
+    public User read(int userId) {
+        try (Connection conn = DbUtil.getConnection()){
+            PreparedStatement statement =
+                    conn.prepareStatement(READ_USER_QUERY);
+            statement.setInt(1, userId);
+            statement.executeQuery();
+            ResultSet resultSet = statement.getResultSet();
+            if (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUserName(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }

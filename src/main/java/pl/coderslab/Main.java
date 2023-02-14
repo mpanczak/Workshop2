@@ -9,10 +9,12 @@ public class Main {
         user.setUserName("John Doe");
         user.setEmail("john.doe.gmail.com");
         user.setPassword("dupa1234");
-
-        UserDAO userDAO = new UserDAO();
-
-        System.out.println(userDAO.create(user).toString());
+//create
+//        UserDAO userDAO = new UserDAO();
+//        System.out.println(userDAO.create(user).toString());
+//read
+        UserDAO userDAO1 = new UserDAO();
+        System.out.println(userDAO1.read(1).toString());
 
     }
 }
